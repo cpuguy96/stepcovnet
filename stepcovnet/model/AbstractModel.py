@@ -1,18 +1,20 @@
 from abc import ABC
-from typing import List
-from typing import Union
 
-from tensorflow.keras.layers import Input
-from tensorflow.keras.layers import Layer
-from tensorflow.keras.models import Model
+import keras
+from keras import layers, models
 
 
 class AbstractModel(ABC, object):
-    def __init__(self, model_input: Union[Input, List[Input]], model_output: Layer, name: str):
+    def __init__(
+        self,
+        model_input: keras.KerasTensor | list[keras.KerasTensor],
+        model_output: layers.Layer,
+        name: str,
+    ):
         self.input = model_input
         self.output = model_output
         self.name = name
 
     @property
-    def model(self) -> Model:
-        return Model(self.input, self.output, name=self.name)
+    def model(self) -> models.Model:
+        return models.Model(self.input, self.output, name=self.name)
